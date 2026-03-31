@@ -1,0 +1,22 @@
+- name: Deploy Nodejs Application
+  hosts: targets
+  become: yes
+
+  tasks:
+
+    - name: Copy .env file
+      ansible.builtin.copy:
+        src: /home/ubuntu/.env
+        dest: /home/ubuntu/
+        owner: ubuntu
+        mode: '0644'
+
+    - name: Copy deploy script
+      ansible.builtin.copy:
+        src: /home/ubuntu/app-deploy.sh
+        dest: /home/ubuntu/
+        owner: ubuntu
+        mode: '0755'
+
+    - name: Run the deployment script
+      shell: /home/ubuntu/deploy-application/app-deploy.sh
